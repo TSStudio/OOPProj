@@ -6,3 +6,4 @@ _deps/
 .vscode
 CMakeFiles/
 Testing/
+.git/
