@@ -5,22 +5,20 @@
 
 #include "Screen.h"
 
-namespace sfSnake
-{
-class MenuScreen : public Screen
-{
+namespace sfSnake {
+class MenuScreen : public Screen {
 public:
-	MenuScreen();
+    MenuScreen();
 
-	void handleInput(sf::RenderWindow& window) override;
-	void update(sf::Time delta) override;
-	void render(sf::RenderWindow& window) override;
+    void handleInput(sf::RenderWindow& window) override;
+    void update(sf::Time delta) override;
+    void render(sf::RenderWindow& window) override;
 
 private:
-	sf::Font font_;
-	sf::Text snakeText_;
-	sf::Text text_;
+    sf::Font font_;
+    sf::Text snakeText_;
+    sf::Text text_;
 };
-}
+}  // namespace sfSnake
 
 #endif

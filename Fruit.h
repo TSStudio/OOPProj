@@ -3,22 +3,20 @@
 
 #include <SFML/Graphics.hpp>
 
-namespace sfSnake
-{
-class Fruit
-{
+namespace sfSnake {
+class Fruit {
 public:
-	Fruit(sf::Vector2f position = sf::Vector2f(0, 0));
+    Fruit(sf::Vector2f position = sf::Vector2f(0, 0));
 
-	void render(sf::RenderWindow& window);
+    void render(sf::RenderWindow& window);
 
-	sf::FloatRect getBounds() const;
+    sf::FloatRect getBounds() const;
 
 private:
-	sf::CircleShape shape_;
+    sf::CircleShape shape_;
 
-	static const float Radius;
+    static const float Radius;
 };
-}
+}  // namespace sfSnake
 
 #endif

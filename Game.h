@@ -9,31 +9,28 @@
 
 #include "Screen.h"
 
-namespace sfSnake
-{
-class Game
-{
+namespace sfSnake {
+class Game {
 public:
-	Game();
+    Game();
 
-	void run();
+    void run();
 
-	void handleInput();
-	void update(sf::Time delta);
-	void render();
+    void handleInput();
+    void update(sf::Time delta);
+    void render();
 
-	static const int Width = 640;
-	static const int Height = 480;
+    static const int Width = 640;
+    static const int Height = 480;
 
-	static std::shared_ptr<Screen> Screen;
+    static std::shared_ptr<Screen> ScreenPtr;
 
 private:
-	sf::RenderWindow window_;
-	sf::Music bgMusic_;
-	
-	static const sf::Time TimePerFrame;
-};
-}
+    sf::RenderWindow window_;
+    sf::Music bgMusic_;
 
+    static const sf::Time TimePerFrame;
+};
+}  // namespace sfSnake
 
 #endif

@@ -2,3 +2,7 @@ sfSnake.vcxproj
 sfSnake.vcxproj.filters
 Debug/
 Release/
+_deps/
+.vscode
+CMakeFiles/
+Testing/
