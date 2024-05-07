@@ -24,29 +24,36 @@ double Direction::get_dy() {
     return sin(degree);
 }
 
-Snake::Snake() : direction_(Direction()), hit_(false) {
-    initNodes();
+Snake::Snake(bool player) : direction_(Direction()), hit_(false) {
+    if (player) {
+        this->player = true;
+        pickupBuffer_.loadFromFile("Sounds/pickup.wav");
+        pickupSound_.setBuffer(pickupBuffer_);
+        pickupSound_.setVolume(30);
 
-    pickupBuffer_.loadFromFile("Sounds/pickup.wav");
-    pickupSound_.setBuffer(pickupBuffer_);
-    pickupSound_.setVolume(30);
+        dieBuffer_.loadFromFile("Sounds/die.wav");
+        dieSound_.setBuffer(dieBuffer_);
+        dieSound_.setVolume(50);
+    } else {
+        this->player = false;
+    }
+}
 
-    dieBuffer_.loadFromFile("Sounds/die.wav");
-    dieSound_.setBuffer(dieBuffer_);
-    dieSound_.setVolume(50);
+void Snake::initNodes(float init_x, float init_y) {
+    for (int i = 0; i < Snake::InitialSize; ++i) {
+        nodes_.push_back(SnakeNode(sf::Vector2f(
+            init_x - SnakeNode::Width / 2,
+            init_y - (SnakeNode::Height / 2) + (SnakeNode::Height * i))));
+    }
+    for (int i = 0; i <= 6 * Snake::InitialSize; ++i) {
+        float x = init_x - SnakeNode::Width / 2;
+        float y = init_y - (SnakeNode::Height / 2) + (SnakeNode::Height * i / 6);
+        nodePositions_.push_back(NodePosition{sf::Vector2f(x, y), 0});
+    }
 }
 
 void Snake::initNodes() {
-    for (int i = 0; i < Snake::InitialSize; ++i) {
-        nodes_.push_back(SnakeNode(sf::Vector2f(
-            Game::Width / 2 - SnakeNode::Width / 2,
-            Game::Height / 2 - (SnakeNode::Height / 2) + (SnakeNode::Height * i))));
-    }
-    for (int i = 0; i <= 6 * Snake::InitialSize; ++i) {
-        float x = Game::Width / 2 - SnakeNode::Width / 2;
-        float y = Game::Height / 2 - (SnakeNode::Height / 2) + (SnakeNode::Height * i / 6);
-        nodePositions_.push_back(NodePosition{sf::Vector2f(x, y), 0});
-    }
+    initNodes(Game::Width / 2, Game::Height / 2);
 }
 
 void Snake::handleInput() {
@@ -74,8 +81,10 @@ void Snake::checkFruitCollisions(std::vector<Fruit>& fruits) {
     }
 
     if (toRemove != fruits.end()) {
-        pickupSound_.play();
-        grow();
+        if (player)
+            pickupSound_.play();
+        for (int i = 0; i < fruits[toRemove - fruits.begin()].nutrition; ++i)
+            grow();
         fruits.erase(toRemove);
     }
 }
@@ -86,6 +95,13 @@ void Snake::grow() {
         float x = nodes_[nodes_.size() - 1].getPosition().x - direction_.get_dx() * SnakeNode::Height * i / 6;
         float y = nodes_[nodes_.size() - 1].getPosition().y - direction_.get_dy() * SnakeNode::Height * i / 6;
         nodePositions_.push_back(NodePosition{sf::Vector2f(x, y), direction_.degree});
+    }
+}
+
+void Snake::melt() {
+    nodes_.pop_back();
+    for (int i = 0; i < 6; ++i) {
+        nodePositions_.pop_back();
     }
 }
 
@@ -116,8 +132,10 @@ void Snake::checkOtherSnakeCollisions(Snake& otherSnake) {
 
     for (decltype(otherSnake.nodes_.size()) i = 0; i < otherSnake.nodes_.size(); ++i) {
         if (headNode.getRadius() + otherSnake.nodes_[i].getRadius() > sqrt(pow(headNode.getPosition().x - otherSnake.nodes_[i].getPosition().x, 2) + pow(headNode.getPosition().y - otherSnake.nodes_[i].getPosition().y, 2))) {
-            dieSound_.play();
-            sf::sleep(sf::seconds(dieBuffer_.getDuration().asSeconds()));
+            if (player) {
+                dieSound_.play();
+                sf::sleep(sf::seconds(dieBuffer_.getDuration().asSeconds()));
+            }
             hit_ = true;
         }
     }
@@ -145,7 +163,7 @@ void Snake::move() {
         nodes_[i].setPosition(nodePositions_[i * 6].position);
         //nodes_[i].shape_.setRotation(nodePositions_[i * 6].degree * 180 / 3.1415926);
         //TODO rotation
-        printf("Pos of Node %lu is %f %f\n", i, nodes_[i].getPosition().x, nodes_[i].getPosition().y);
+        //printf("Pos of Node %lu is %f %f\n", i, nodes_[i].getPosition().x, nodes_[i].getPosition().y);
         if (i == 0) break;
     }
     nodePositions_.pop_back();

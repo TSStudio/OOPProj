@@ -6,10 +6,20 @@
 #include "GameScreen.h"
 #include "GameOverScreen.h"
 #include "Game.h"
+#include "Random.h"
 
 using namespace sfSnake;
 
-GameScreen::GameScreen() : snake_(), AIsnake_(), AIsnakeAlive_(true) {
+GameScreen::GameScreen() : snake_(), AIsnakes_(), AIsnakeAlive_(true) {
+    snake_.initNodes();
+    AIsnakes_.push_back(Snake(false));
+    float AI_x = Random::randomFloat(Game::Width * 0.2, Game::Width * 0.8);
+    float AI_y = Random::randomFloat(Game::Height * 0.2, Game::Height * 0.8);
+    while (abs(AI_x - snake_.nodes_[0].getPosition().x) + abs(AI_y - snake_.nodes_[0].getPosition().y) < 5 * SnakeNode::Width) {
+        AI_x = Random::randomFloat(Game::Width * 0.2, Game::Width * 0.8);
+        AI_y = Random::randomFloat(Game::Height * 0.2, Game::Height * 0.8);
+    }
+    AIsnakes_[0].initNodes(AI_x, AI_y);
 }
 
 void GameScreen::handleInput(sf::RenderWindow& window) {
@@ -17,30 +27,57 @@ void GameScreen::handleInput(sf::RenderWindow& window) {
 }
 
 void GameScreen::update(sf::Time delta) {
-    if (fruit_.size() == 0)
-        generateFruit();
+    if (fruit_.size() < 8) {
+        int x = Random::randomInt(0, 10);
+        if (x < 1) {
+            generateFruit();
+        }
+    }
 
     snake_.update(delta);
     snake_.checkFruitCollisions(fruit_);
 
-    if (snake_.hit())
+    if (snake_.hit()) {
         Game::ScreenPtr = std::make_shared<GameOverScreen>(snake_.getSize());
+        return;
+    }
 
     if (AIsnakeAlive_) {
         if (fruit_.size()) {
-            AIsnake_.doAIMovement(fruit_[0].getPosition());
+            AIsnakes_[0].doAIMovement(fruit_[0].getPosition());
         }
-        AIsnake_.update(delta);
-        AIsnake_.checkFruitCollisions(fruit_);
-        if (AIsnake_.hit())
+        AIsnakes_[0].update(delta);
+        AIsnakes_[0].checkFruitCollisions(fruit_);
+        snake_.checkOtherSnakeCollisions(AIsnakes_[0]);
+        AIsnakes_[0].checkOtherSnakeCollisions(snake_);
+        if (AIsnakes_[0].hit()) {
             AIsnakeAlive_ = false;
+            //todo: drop fruit
+            for (auto& node : AIsnakes_[0].nodes_) {
+                if (Random::randomInt(0, 1)) continue;
+                fruit_.push_back(Fruit(node.getPosition(), 1));
+            }
+        }
+    }
+    if (!AIsnakeAlive_) {
+        AIsnakes_.erase(AIsnakes_.begin());
+        AIsnakes_.push_back(Snake(false));
+        float AI_x = Random::randomFloat(Game::Width * 0.2, Game::Width * 0.8);
+        float AI_y = Random::randomFloat(Game::Height * 0.2, Game::Height * 0.8);
+        sf::Vector2f player_pos = snake_.nodes_[0].getPosition();
+        while (abs(AI_x - player_pos.x) + abs(AI_y - player_pos.y) < 3 * SnakeNode::Width) {
+            AI_x = Random::randomFloat(Game::Width * 0.2, Game::Width * 0.8);
+            AI_y = Random::randomFloat(Game::Height * 0.2, Game::Height * 0.8);
+        }
+        AIsnakes_[0].initNodes(AI_x, AI_y);
+        AIsnakeAlive_ = true;
     }
 }
 
 void GameScreen::render(sf::RenderWindow& window) {
     snake_.render(window);
     if (AIsnakeAlive_)
-        AIsnake_.render(window);
+        AIsnakes_[0].render(window);
 
     for (auto fruit : fruit_)
         fruit.render(window);
@@ -52,5 +89,5 @@ void GameScreen::generateFruit() {
     static std::uniform_int_distribution<int> xDistribution(0, Game::Width - SnakeNode::Width);
     static std::uniform_int_distribution<int> yDistribution(0, Game::Height - SnakeNode::Height);
 
-    fruit_.push_back(Fruit(sf::Vector2f(xDistribution(engine), yDistribution(engine))));
+    fruit_.push_back(Fruit(Random::randomPosition(0, Game::Width - SnakeNode::Width, 0, Game::Height - SnakeNode::Height), Random::randomInt(0, 3)));
 }

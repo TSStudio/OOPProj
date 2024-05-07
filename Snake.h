@@ -21,26 +21,30 @@ public:
 
 class Snake {
 public:
-    Snake();
+    Snake(bool player = true);
 
     void handleInput();
     void update(sf::Time delta);
     void render(sf::RenderWindow& window);
 
     void checkFruitCollisions(std::vector<Fruit>& fruits);
+    void checkOtherSnakeCollisions(Snake& otherSnake);
 
     bool hit() const;
 
     unsigned getSize() const;
     void doAIMovement(sf::Vector2f target);
 
+    void initNodes(float x, float y);
+    void initNodes();
+    std::vector<SnakeNode> nodes_;
+
 private:
+    bool player;
     void move();
     void grow();
+    void melt();
     void checkEdgeCollisions();
-    //void checkSelfCollisions();
-    void checkOtherSnakeCollisions(Snake& otherSnake);
-    void initNodes();
 
     bool hit_;
 
@@ -53,7 +57,6 @@ private:
     sf::SoundBuffer dieBuffer_;
     sf::Sound dieSound_;
 
-    std::vector<SnakeNode> nodes_;
     std::deque<NodePosition> nodePositions_;
 
     static const int InitialSize;

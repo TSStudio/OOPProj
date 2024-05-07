@@ -34,5 +34,9 @@ sudo apt install \
     libgl1-mesa-dev \
     libegl1-mesa-dev \
     libdrm-dev \
-    libgbm-dev
+    libgbm-dev \
+    libfreetype-dev \
+    libfreetype6 \
+    libsfml-dev
+sudo apt-get install pkg-config
 ```

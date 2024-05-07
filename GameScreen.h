@@ -20,7 +20,7 @@ public:
 
 private:
     Snake snake_;
-    Snake AIsnake_;
+    std::vector<Snake> AIsnakes_;
     bool AIsnakeAlive_;
     std::vector<Fruit> fruit_;
 };
