@@ -24,12 +24,11 @@ public:
     static const int Height = 480;
 
     static std::shared_ptr<Screen> ScreenPtr;
+    sf::RenderWindow window_;
+    static const sf::Time TimePerFrame;
 
 private:
-    sf::RenderWindow window_;
     sf::Music bgMusic_;
-
-    static const sf::Time TimePerFrame;
 };
 }  // namespace sfSnake
 

@@ -16,6 +16,10 @@ void Fruit::render(sf::RenderWindow& window) {
     window.draw(shape_);
 }
 
-sf::FloatRect Fruit::getBounds() const {
-    return shape_.getGlobalBounds();
+float Fruit::getRadius() const {
+    return Fruit::Radius;
+}
+
+sf::Vector2f Fruit::getPosition() const {
+    return shape_.getPosition();
 }

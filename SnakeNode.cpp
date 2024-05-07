@@ -14,27 +14,33 @@ SnakeNode::SnakeNode(sf::Vector2f position)
     shape_.setSize(sf::Vector2f(SnakeNode::Width, SnakeNode::Height));
     shape_.setOutlineColor(sf::Color::White);
     shape_.setOutlineThickness(-1.f);
+
+    innerShape_.setPosition(position_);
+    shape_.setSize(sf::Vector2f(SnakeNode::Width * 0.99, SnakeNode::Height * 0.99));
 }
 
 void SnakeNode::setPosition(sf::Vector2f position) {
     position_ = position;
     shape_.setPosition(position_);
+    innerShape_.setPosition(position_);
 }
 
 void SnakeNode::setPosition(float x, float y) {
     position_.x = x;
     position_.y = y;
     shape_.setPosition(position_);
+    innerShape_.setPosition(position_);
 }
 
 void SnakeNode::move(float xOffset, float yOffset) {
     position_.x += xOffset;
     position_.y += yOffset;
     shape_.setPosition(position_);
+    innerShape_.setPosition(position_);
 }
 
-sf::FloatRect SnakeNode::getBounds() const {
-    return shape_.getGlobalBounds();
+float SnakeNode::getRadius() const {
+    return SnakeNode::Width * 0.99 / 2;
 }
 
 sf::Vector2f SnakeNode::getPosition() const {

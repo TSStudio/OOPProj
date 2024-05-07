@@ -5,16 +5,18 @@
 #include <SFML/Audio.hpp>
 
 #include <vector>
+#include <deque>
 
 #include "SnakeNode.h"
 #include "Fruit.h"
 
 namespace sfSnake {
-enum class Direction {
-    Left,
-    Right,
-    Up,
-    Down
+class Direction {
+public:
+    double degree;
+    double get_dx();
+    double get_dy();
+    Direction() : degree(0) {}
 };
 
 class Snake {
@@ -27,7 +29,7 @@ public:
 
     void checkFruitCollisions(std::vector<Fruit>& fruits);
 
-    bool hitSelf() const;
+    bool hit() const;
 
     unsigned getSize() const;
 
@@ -35,10 +37,10 @@ private:
     void move();
     void grow();
     void checkEdgeCollisions();
-    void checkSelfCollisions();
+    //void checkSelfCollisions();
     void initNodes();
 
-    bool hitSelf_;
+    bool hit_;
 
     sf::Vector2f position_;
     Direction direction_;
@@ -50,6 +52,7 @@ private:
     sf::Sound dieSound_;
 
     std::vector<SnakeNode> nodes_;
+    std::deque<NodePosition> nodePositions_;
 
     static const int InitialSize;
 };

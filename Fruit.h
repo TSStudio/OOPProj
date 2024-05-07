@@ -10,7 +10,8 @@ public:
 
     void render(sf::RenderWindow& window);
 
-    sf::FloatRect getBounds() const;
+    float getRadius() const;
+    sf::Vector2f getPosition() const;
 
 private:
     sf::CircleShape shape_;

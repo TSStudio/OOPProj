@@ -23,7 +23,7 @@ void GameScreen::update(sf::Time delta) {
     snake_.update(delta);
     snake_.checkFruitCollisions(fruit_);
 
-    if (snake_.hitSelf())
+    if (snake_.hit())
         Game::ScreenPtr = std::make_shared<GameOverScreen>(snake_.getSize());
 }
 

@@ -1,10 +1,9 @@
 #include "Game.h"
 
 using namespace sfSnake;
-
+Game game;
 int main() {
-    Game game;
-    game.run();
+        game.run();
 
     return 0;
 }

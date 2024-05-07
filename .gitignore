@@ -7,3 +7,4 @@ _deps/
 CMakeFiles/
 Testing/
 .git/
+build/
