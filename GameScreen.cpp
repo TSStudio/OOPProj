@@ -9,7 +9,7 @@
 
 using namespace sfSnake;
 
-GameScreen::GameScreen() : snake_() {
+GameScreen::GameScreen() : snake_(), AIsnake_(), AIsnakeAlive_(true) {
 }
 
 void GameScreen::handleInput(sf::RenderWindow& window) {
@@ -25,10 +25,22 @@ void GameScreen::update(sf::Time delta) {
 
     if (snake_.hit())
         Game::ScreenPtr = std::make_shared<GameOverScreen>(snake_.getSize());
+
+    if (AIsnakeAlive_) {
+        if (fruit_.size()) {
+            AIsnake_.doAIMovement(fruit_[0].getPosition());
+        }
+        AIsnake_.update(delta);
+        AIsnake_.checkFruitCollisions(fruit_);
+        if (AIsnake_.hit())
+            AIsnakeAlive_ = false;
+    }
 }
 
 void GameScreen::render(sf::RenderWindow& window) {
     snake_.render(window);
+    if (AIsnakeAlive_)
+        AIsnake_.render(window);
 
     for (auto fruit : fruit_)
         fruit.render(window);

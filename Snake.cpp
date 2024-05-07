@@ -110,17 +110,30 @@ bool Snake::hit() const {
 //     }
 // }
 
+void Snake::checkOtherSnakeCollisions(Snake& otherSnake) {
+    SnakeNode& headNode = nodes_[0];
+    SnakeNode& otherHeadNode = otherSnake.nodes_[0];
+
+    for (decltype(otherSnake.nodes_.size()) i = 0; i < otherSnake.nodes_.size(); ++i) {
+        if (headNode.getRadius() + otherSnake.nodes_[i].getRadius() > sqrt(pow(headNode.getPosition().x - otherSnake.nodes_[i].getPosition().x, 2) + pow(headNode.getPosition().y - otherSnake.nodes_[i].getPosition().y, 2))) {
+            dieSound_.play();
+            sf::sleep(sf::seconds(dieBuffer_.getDuration().asSeconds()));
+            hit_ = true;
+        }
+    }
+}
+
 void Snake::checkEdgeCollisions() {
     SnakeNode& headNode = nodes_[0];
 
     if (headNode.getPosition().x <= 0)
-        headNode.setPosition(Game::Width, headNode.getPosition().y);
+        hit_ = true;
     else if (headNode.getPosition().x >= Game::Width)
-        headNode.setPosition(0, headNode.getPosition().y);
+        hit_ = true;
     else if (headNode.getPosition().y <= 0)
-        headNode.setPosition(headNode.getPosition().x, Game::Height);
+        hit_ = true;
     else if (headNode.getPosition().y >= Game::Height)
-        headNode.setPosition(headNode.getPosition().x, 0);
+        hit_ = true;
 }
 
 void Snake::move() {
@@ -136,6 +149,13 @@ void Snake::move() {
         if (i == 0) break;
     }
     nodePositions_.pop_back();
+}
+
+void Snake::doAIMovement(sf::Vector2f target) {
+    sf::Vector2f headPos = nodes_[0].getPosition();
+    double dx = target.x - headPos.x;
+    double dy = target.y - headPos.y;
+    direction_.degree = atan2(dy, dx);
 }
 
 void Snake::render(sf::RenderWindow& window) {

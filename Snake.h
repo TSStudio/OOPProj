@@ -32,12 +32,14 @@ public:
     bool hit() const;
 
     unsigned getSize() const;
+    void doAIMovement(sf::Vector2f target);
 
 private:
     void move();
     void grow();
     void checkEdgeCollisions();
     //void checkSelfCollisions();
+    void checkOtherSnakeCollisions(Snake& otherSnake);
     void initNodes();
 
     bool hit_;
