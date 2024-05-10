@@ -13,13 +13,17 @@ public:
     void switch_bg_color();
     void switch_grid_color();
     void switch_grid();
+    void updateScore(float _score);
 
 private:
     sf::RectangleShape background_;
     sf::Color bg_color;
     sf::Color grid_color;
+    sf::Color score_color = sf::Color(120, 120, 120);
     std::vector<sf::RectangleShape> grid_horizontal;
     std::vector<sf::RectangleShape> grid_vertical;
+    sf::Font font_;
+    sf::Text score;
     bool grid_on = false;
     unsigned bg_color_idx = 0;
     unsigned grid_color_idx = 1;

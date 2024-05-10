@@ -21,6 +21,7 @@ public:
 
 class Snake {
 public:
+    float score_;
     Snake(bool player = true);
 
     void handleInput();
@@ -45,6 +46,8 @@ private:
     void grow();
     void melt();
     void checkEdgeCollisions();
+    void sync_length();
+    void die();
 
     bool hit_;
 

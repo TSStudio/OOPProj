@@ -1,4 +1,5 @@
 #include "Background.h"
+#include <format>
 #include "Game.h"
 
 using namespace sfSnake;
@@ -21,6 +22,10 @@ Background::Background() {
         grid_vertical[i].setFillColor(grid_color);
         grid_vertical[i].setPosition(0, i * grid_size);
     }
+    score.setString("Score: ");
+    score.setCharacterSize(24);
+    score.setFillColor(score_color);
+    score.setPosition(10, 10);
 }
 
 void Background::switch_bg_color() {
@@ -44,6 +49,10 @@ void Background::switch_grid() {
     grid_on = !grid_on;
 }
 
+void Background::updateScore(float _score) {
+    score.setString(std::format("Score: {:.2f}", _score));
+}
+
 void Background::render(sf::RenderWindow& window) {
     window.draw(background_);
     if (grid_on) {
@@ -54,4 +63,7 @@ void Background::render(sf::RenderWindow& window) {
             window.draw(line);
         }
     }
+    font_.loadFromFile("Fonts/arial.ttf");
+    score.setFont(font_);
+    window.draw(score);
 }

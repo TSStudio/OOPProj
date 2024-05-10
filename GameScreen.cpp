@@ -102,6 +102,7 @@ void GameScreen::update(sf::Time delta) {
         AIsnakes_[0].initNodes(AI_x, AI_y);
         AIsnakeAlive_ = true;
     }
+    background_.updateScore(snake_.score_);
 }
 
 void GameScreen::render(sf::RenderWindow& window) {
