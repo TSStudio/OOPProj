@@ -16,7 +16,7 @@ GameOverScreen::GameOverScreen(std::size_t score) : score_(score) {
                     "!"
                     "\n\nPress [SPACE] to retry"
                     "\n\nPress [ESC] to quit");
-    text_.setColor(sf::Color::Red);
+    text_.setFillColor(sf::Color::Red);
 
     sf::FloatRect textBounds = text_.getLocalBounds();
     text_.setOrigin(textBounds.left + textBounds.width / 2,
@@ -27,6 +27,7 @@ GameOverScreen::GameOverScreen(std::size_t score) : score_(score) {
 void GameOverScreen::handleInput(sf::RenderWindow& window) {
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space))
         Game::ScreenPtr = std::make_shared<GameScreen>();
+
     else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape))
         window.close();
 }
