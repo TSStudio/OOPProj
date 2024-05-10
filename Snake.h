@@ -50,6 +50,7 @@ private:
     void die();
 
     bool hit_;
+    bool accelerating_ = false;
 
     sf::Vector2f position_;
     Direction direction_;

@@ -65,10 +65,18 @@ void Snake::handleInput() {
         double dy = mousePos.y - headPos.y;
         direction_.degree = atan2(dy, dx);
     }
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space)) {
+        accelerating_ = true;
+    } else {
+        accelerating_ = false;
+    }
 }
 
 void Snake::update(sf::Time delta) {
     score_ -= 0.002;
+    if (accelerating_) {
+        score_ -= 0.002;
+    }
     sync_length();
     move();
     checkEdgeCollisions();
@@ -171,10 +179,16 @@ void Snake::die() {
 }
 
 void Snake::move() {
-    float head_x = nodePositions_[0].position.x + direction_.get_dx() * SnakeNode::Width * velocity;  // direction_.get_dx() * SnakeNode::Width * velocity * 1.1 + ;
-    float head_y = nodePositions_[0].position.y + direction_.get_dy() * SnakeNode::Width * velocity;  // direction_.get_dy() * SnakeNode::Height * velocity * 1.1 + ;
+    float head_x = nodePositions_[0].position.x + direction_.get_dx() * SnakeNode::Width * velocity;
+    float head_y = nodePositions_[0].position.y + direction_.get_dy() * SnakeNode::Width * velocity;
     double head_degree = direction_.degree;
     nodePositions_.push_front(NodePosition{sf::Vector2f(head_x, head_y), head_degree});
+    if (accelerating_) {
+        float head_x = nodePositions_[0].position.x + direction_.get_dx() * SnakeNode::Width * velocity;
+        float head_y = nodePositions_[0].position.y + direction_.get_dy() * SnakeNode::Width * velocity;
+        double head_degree = direction_.degree;
+        nodePositions_.push_front(NodePosition{sf::Vector2f(head_x, head_y), head_degree});
+    }
     for (decltype(nodes_.size()) i = nodes_.size() - 1;; --i) {
         nodes_[i].setPosition(nodePositions_[i * 6].position);
         //nodes_[i].shape_.setRotation(nodePositions_[i * 6].degree * 180 / 3.1415926);
