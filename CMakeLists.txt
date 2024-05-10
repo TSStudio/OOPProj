@@ -9,6 +9,12 @@ option(BUILD_SHARED_LIBS "Build shared libraries" OFF)
 #     GIT_REPOSITORY https://github.com/SFML/SFML.git
 #     GIT_TAG 2.6.x)
 # FetchContent_MakeAvailable(SFML)
+
+# FetchContent_Declare(Freetype
+#     GIT_REPOSITORY https://github.com/freetype/freetype.git
+#     GIT_TAG VER-2-13-2)
+# FetchContent_MakeAvailable(Freetype)
+
 find_package(Freetype REQUIRED)
 find_package(SFML COMPONENTS system window graphics)
 
