@@ -5,6 +5,7 @@
 
 #include "GameScreen.h"
 #include "GameOverScreen.h"
+#include "Background.h"
 #include "Game.h"
 #include "Random.h"
 
@@ -21,16 +22,16 @@ GameScreen::GameScreen() : snake_(), AIsnakes_(), AIsnakeAlive_(true) {
     }
     AIsnakes_[0].initNodes(AI_x, AI_y);
 
-    background_ = sf::RectangleShape(sf::Vector2f(Game::Width, Game::Height));
-    background_.setFillColor(avail_bg_color[bg_color_idx]);
+    background_ = Background();
 }
 
 void GameScreen::handleInput(sf::RenderWindow& window) {
     static bool key_Q_state_last = false;
     static bool key_W_state_last = false;
+    static bool key_E_state_last = false;
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Q)) {
         if (!key_Q_state_last) {
-            switch_bg_color();
+            background_.switch_bg_color();
         }
         key_Q_state_last = true;
     } else {
@@ -38,18 +39,21 @@ void GameScreen::handleInput(sf::RenderWindow& window) {
     }
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::W)) {
         if (!key_W_state_last) {
-            grid_color_idx = (grid_color_idx + 1) % avail_bg_color.size();
+            background_.switch_grid_color();
         }
         key_W_state_last = true;
     } else {
         key_W_state_last = false;
     }
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::E)) {
+        if (!key_E_state_last) {
+            background_.switch_grid();
+        }
+        key_E_state_last = true;
+    } else {
+        key_E_state_last = false;
+    }
     snake_.handleInput();
-}
-
-void GameScreen::switch_bg_color() {
-    background_.setFillColor(avail_bg_color[bg_color_idx]);
-    bg_color_idx = (bg_color_idx + 1) % avail_bg_color.size();
 }
 
 void GameScreen::update(sf::Time delta) {
@@ -101,7 +105,7 @@ void GameScreen::update(sf::Time delta) {
 }
 
 void GameScreen::render(sf::RenderWindow& window) {
-    window.draw(background_);
+    background_.render(window);
     snake_.render(window);
     if (AIsnakeAlive_)
         AIsnakes_[0].render(window);

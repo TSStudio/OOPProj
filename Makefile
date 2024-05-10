@@ -194,6 +194,30 @@ sfSnake/fast:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/sfSnake.dir/build.make CMakeFiles/sfSnake.dir/build
 .PHONY : sfSnake/fast
 
+Background.o: Background.cpp.o
+.PHONY : Background.o
+
+# target to build an object file
+Background.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/sfSnake.dir/build.make CMakeFiles/sfSnake.dir/Background.cpp.o
+.PHONY : Background.cpp.o
+
+Background.i: Background.cpp.i
+.PHONY : Background.i
+
+# target to preprocess a source file
+Background.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/sfSnake.dir/build.make CMakeFiles/sfSnake.dir/Background.cpp.i
+.PHONY : Background.cpp.i
+
+Background.s: Background.cpp.s
+.PHONY : Background.s
+
+# target to generate assembly for a file
+Background.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/sfSnake.dir/build.make CMakeFiles/sfSnake.dir/Background.cpp.s
+.PHONY : Background.cpp.s
+
 Fruit.o: Fruit.cpp.o
 .PHONY : Fruit.o
 
@@ -449,6 +473,9 @@ help:
 	@echo "... package_source"
 	@echo "... rebuild_cache"
 	@echo "... sfSnake"
+	@echo "... Background.o"
+	@echo "... Background.i"
+	@echo "... Background.s"
 	@echo "... Fruit.o"
 	@echo "... Fruit.i"
 	@echo "... Fruit.s"
