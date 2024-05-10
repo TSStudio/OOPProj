@@ -8,6 +8,7 @@
 #include "Fruit.h"
 
 namespace sfSnake {
+const std::vector<sf::Color> avail_bg_color = {sf::Color(240, 240, 240), sf::Color(15, 15, 15), sf::Color(69, 21, 14)};
 class GameScreen : public Screen {
 public:
     GameScreen();
@@ -23,6 +24,10 @@ private:
     std::vector<Snake> AIsnakes_;
     bool AIsnakeAlive_;
     std::vector<Fruit> fruit_;
+    unsigned bg_color_idx = 0;
+    unsigned grid_color_idx = 1;
+    sf::RectangleShape background_;
+    void switch_bg_color();
 };
 }  // namespace sfSnake
 
