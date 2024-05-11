@@ -9,3 +9,11 @@ Testing/
 .git/
 build/
 .cmake/
+DartConfiguration.tcl
+CPackConfig.cmake
+CPackSourceConfig.cmake
+CTestTestfile.cmake
+compile_commands.json
+CMakeCache.txt
+cmake_install.cmake
+sfSnake
