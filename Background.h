@@ -9,6 +9,7 @@ const std::vector<sf::Color> avail_grid_color = {sf::Color(240, 240, 240), sf::C
 class Background {
 public:
     Background();
+    Background(const Background& old);
     void render(sf::RenderWindow& window);
     void switch_bg_color();
     void switch_grid_color();

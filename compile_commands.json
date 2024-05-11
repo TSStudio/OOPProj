@@ -1,0 +1,74 @@
+[
+{
+  "directory": "/home/tmysam/sfSnake",
+  "command": "/usr/bin/g++  -I/usr/include/freetype2 -g -std=gnu++20 -o CMakeFiles/sfSnake.dir/Background.cpp.o -c /home/tmysam/sfSnake/Background.cpp",
+  "file": "/home/tmysam/sfSnake/Background.cpp",
+  "output": "CMakeFiles/sfSnake.dir/Background.cpp.o"
+},
+{
+  "directory": "/home/tmysam/sfSnake",
+  "command": "/usr/bin/g++  -I/usr/include/freetype2 -g -std=gnu++20 -o CMakeFiles/sfSnake.dir/Benchmark.cpp.o -c /home/tmysam/sfSnake/Benchmark.cpp",
+  "file": "/home/tmysam/sfSnake/Benchmark.cpp",
+  "output": "CMakeFiles/sfSnake.dir/Benchmark.cpp.o"
+},
+{
+  "directory": "/home/tmysam/sfSnake",
+  "command": "/usr/bin/g++  -I/usr/include/freetype2 -g -std=gnu++20 -o CMakeFiles/sfSnake.dir/Fruit.cpp.o -c /home/tmysam/sfSnake/Fruit.cpp",
+  "file": "/home/tmysam/sfSnake/Fruit.cpp",
+  "output": "CMakeFiles/sfSnake.dir/Fruit.cpp.o"
+},
+{
+  "directory": "/home/tmysam/sfSnake",
+  "command": "/usr/bin/g++  -I/usr/include/freetype2 -g -std=gnu++20 -o CMakeFiles/sfSnake.dir/Game.cpp.o -c /home/tmysam/sfSnake/Game.cpp",
+  "file": "/home/tmysam/sfSnake/Game.cpp",
+  "output": "CMakeFiles/sfSnake.dir/Game.cpp.o"
+},
+{
+  "directory": "/home/tmysam/sfSnake",
+  "command": "/usr/bin/g++  -I/usr/include/freetype2 -g -std=gnu++20 -o CMakeFiles/sfSnake.dir/GameOverScreen.cpp.o -c /home/tmysam/sfSnake/GameOverScreen.cpp",
+  "file": "/home/tmysam/sfSnake/GameOverScreen.cpp",
+  "output": "CMakeFiles/sfSnake.dir/GameOverScreen.cpp.o"
+},
+{
+  "directory": "/home/tmysam/sfSnake",
+  "command": "/usr/bin/g++  -I/usr/include/freetype2 -g -std=gnu++20 -o CMakeFiles/sfSnake.dir/GameScreen.cpp.o -c /home/tmysam/sfSnake/GameScreen.cpp",
+  "file": "/home/tmysam/sfSnake/GameScreen.cpp",
+  "output": "CMakeFiles/sfSnake.dir/GameScreen.cpp.o"
+},
+{
+  "directory": "/home/tmysam/sfSnake",
+  "command": "/usr/bin/g++  -I/usr/include/freetype2 -g -std=gnu++20 -o CMakeFiles/sfSnake.dir/MenuScreen.cpp.o -c /home/tmysam/sfSnake/MenuScreen.cpp",
+  "file": "/home/tmysam/sfSnake/MenuScreen.cpp",
+  "output": "CMakeFiles/sfSnake.dir/MenuScreen.cpp.o"
+},
+{
+  "directory": "/home/tmysam/sfSnake",
+  "command": "/usr/bin/g++  -I/usr/include/freetype2 -g -std=gnu++20 -o CMakeFiles/sfSnake.dir/Random.cpp.o -c /home/tmysam/sfSnake/Random.cpp",
+  "file": "/home/tmysam/sfSnake/Random.cpp",
+  "output": "CMakeFiles/sfSnake.dir/Random.cpp.o"
+},
+{
+  "directory": "/home/tmysam/sfSnake",
+  "command": "/usr/bin/g++  -I/usr/include/freetype2 -g -std=gnu++20 -o CMakeFiles/sfSnake.dir/Screen.cpp.o -c /home/tmysam/sfSnake/Screen.cpp",
+  "file": "/home/tmysam/sfSnake/Screen.cpp",
+  "output": "CMakeFiles/sfSnake.dir/Screen.cpp.o"
+},
+{
+  "directory": "/home/tmysam/sfSnake",
+  "command": "/usr/bin/g++  -I/usr/include/freetype2 -g -std=gnu++20 -o CMakeFiles/sfSnake.dir/Snake.cpp.o -c /home/tmysam/sfSnake/Snake.cpp",
+  "file": "/home/tmysam/sfSnake/Snake.cpp",
+  "output": "CMakeFiles/sfSnake.dir/Snake.cpp.o"
+},
+{
+  "directory": "/home/tmysam/sfSnake",
+  "command": "/usr/bin/g++  -I/usr/include/freetype2 -g -std=gnu++20 -o CMakeFiles/sfSnake.dir/SnakeNode.cpp.o -c /home/tmysam/sfSnake/SnakeNode.cpp",
+  "file": "/home/tmysam/sfSnake/SnakeNode.cpp",
+  "output": "CMakeFiles/sfSnake.dir/SnakeNode.cpp.o"
+},
+{
+  "directory": "/home/tmysam/sfSnake",
+  "command": "/usr/bin/g++  -I/usr/include/freetype2 -g -std=gnu++20 -o CMakeFiles/sfSnake.dir/main.cpp.o -c /home/tmysam/sfSnake/main.cpp",
+  "file": "/home/tmysam/sfSnake/main.cpp",
+  "output": "CMakeFiles/sfSnake.dir/main.cpp.o"
+}
+]

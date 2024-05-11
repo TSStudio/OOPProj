@@ -218,6 +218,30 @@ Background.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/sfSnake.dir/build.make CMakeFiles/sfSnake.dir/Background.cpp.s
 .PHONY : Background.cpp.s
 
+Benchmark.o: Benchmark.cpp.o
+.PHONY : Benchmark.o
+
+# target to build an object file
+Benchmark.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/sfSnake.dir/build.make CMakeFiles/sfSnake.dir/Benchmark.cpp.o
+.PHONY : Benchmark.cpp.o
+
+Benchmark.i: Benchmark.cpp.i
+.PHONY : Benchmark.i
+
+# target to preprocess a source file
+Benchmark.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/sfSnake.dir/build.make CMakeFiles/sfSnake.dir/Benchmark.cpp.i
+.PHONY : Benchmark.cpp.i
+
+Benchmark.s: Benchmark.cpp.s
+.PHONY : Benchmark.s
+
+# target to generate assembly for a file
+Benchmark.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/sfSnake.dir/build.make CMakeFiles/sfSnake.dir/Benchmark.cpp.s
+.PHONY : Benchmark.cpp.s
+
 Fruit.o: Fruit.cpp.o
 .PHONY : Fruit.o
 
@@ -476,6 +500,9 @@ help:
 	@echo "... Background.o"
 	@echo "... Background.i"
 	@echo "... Background.s"
+	@echo "... Benchmark.o"
+	@echo "... Benchmark.i"
+	@echo "... Benchmark.s"
 	@echo "... Fruit.o"
 	@echo "... Fruit.i"
 	@echo "... Fruit.s"

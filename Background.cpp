@@ -26,6 +26,23 @@ Background::Background() {
     score.setCharacterSize(24);
     score.setFillColor(score_color);
     score.setPosition(10, 10);
+    font_.loadFromFile("Fonts/arial.ttf");
+    score.setFont(font_);
+}
+
+Background::Background(const Background& old) {
+    background_ = old.background_;
+    bg_color = old.bg_color;
+    grid_color = old.grid_color;
+    grid_horizontal = old.grid_horizontal;
+    grid_vertical = old.grid_vertical;
+    score = old.score;
+    font_.loadFromFile("Fonts/arial.ttf");
+    score_color = old.score_color;
+    grid_on = old.grid_on;
+    bg_color_idx = old.bg_color_idx;
+    grid_color_idx = old.grid_color_idx;
+    score.setFont(font_);
 }
 
 void Background::switch_bg_color() {
@@ -63,7 +80,6 @@ void Background::render(sf::RenderWindow& window) {
             window.draw(line);
         }
     }
-    font_.loadFromFile("Fonts/arial.ttf");
     score.setFont(font_);
     window.draw(score);
 }

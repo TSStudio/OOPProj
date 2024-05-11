@@ -8,3 +8,4 @@ CMakeFiles/
 Testing/
 .git/
 build/
+.cmake/

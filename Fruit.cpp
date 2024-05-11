@@ -9,8 +9,9 @@ const float Fruit::Radius = 5.f;
 
 Fruit::Fruit(sf::Vector2f position, int nutrition) {
     this->nutrition = nutrition;
-    shape_.setPosition(position);
     shape_.setRadius(Fruit::Radius);
+    shape_.setOrigin(Fruit::Radius, Fruit::Radius);
+    shape_.setPosition(position);
     switch (nutrition) {
         case 0:
             shape_.setFillColor(Random::randomInt(0, 1) ? sf::Color::Black : sf::Color(185, 122, 87));

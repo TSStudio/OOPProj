@@ -43,12 +43,13 @@ Snake::Snake(bool player) : direction_(Direction()), hit_(false) {
 void Snake::initNodes(float init_x, float init_y) {
     for (int i = 0; i < Snake::InitialSize; ++i) {
         nodes_.push_back(SnakeNode(sf::Vector2f(
-            init_x - SnakeNode::Width / 2,
-            init_y - (SnakeNode::Height / 2) + (SnakeNode::Height * i))));
+                                       init_x,
+                                       init_y + (SnakeNode::Height * i)),
+                                   i == 0, player ? sf::Color::Green : sf::Color::Red));
     }
     for (int i = 0; i <= 6 * Snake::InitialSize; ++i) {
-        float x = init_x - SnakeNode::Width / 2;
-        float y = init_y - (SnakeNode::Height / 2) + (SnakeNode::Height * i / 6);
+        float x = init_x;
+        float y = init_y + (SnakeNode::Height * i / 6);
         nodePositions_.push_back(NodePosition{sf::Vector2f(x, y), 0});
     }
 }
@@ -122,7 +123,7 @@ void Snake::sync_length() {
         }
     }
     while (nodes_.size() < length) {
-        nodes_.push_back(SnakeNode(sf::Vector2f(nodes_[nodes_.size() - 1].getPosition().x - direction_.get_dx() * SnakeNode::Height, nodes_[nodes_.size() - 1].getPosition().y - direction_.get_dy() * SnakeNode::Height)));
+        nodes_.push_back(SnakeNode(sf::Vector2f(nodes_[nodes_.size() - 1].getPosition().x - direction_.get_dx() * SnakeNode::Height, nodes_[nodes_.size() - 1].getPosition().y - direction_.get_dy() * SnakeNode::Height), false, player ? sf::Color::Green : sf::Color::Red));
         for (int i = 1; i <= 6; ++i) {
             float x = nodes_[nodes_.size() - 1].getPosition().x - direction_.get_dx() * SnakeNode::Height * i / 6;
             float y = nodes_[nodes_.size() - 1].getPosition().y - direction_.get_dy() * SnakeNode::Height * i / 6;
@@ -190,7 +191,7 @@ void Snake::move() {
         nodePositions_.push_front(NodePosition{sf::Vector2f(head_x, head_y), head_degree});
     }
     for (decltype(nodes_.size()) i = nodes_.size() - 1;; --i) {
-        nodes_[i].setPosition(nodePositions_[i * 6].position);
+        nodes_[i].setPosition(nodePositions_[i * 6]);
         //nodes_[i].shape_.setRotation(nodePositions_[i * 6].degree * 180 / 3.1415926);
         //TODO rotation
         //printf("Pos of Node %lu is %f %f\n", i, nodes_[i].getPosition().x, nodes_[i].getPosition().y);
@@ -207,6 +208,6 @@ void Snake::doAIMovement(sf::Vector2f target) {
 }
 
 void Snake::render(sf::RenderWindow& window) {
-    for (auto node : nodes_)
+    for (auto& node : nodes_)
         node.render(window);
 }

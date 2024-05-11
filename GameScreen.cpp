@@ -8,8 +8,11 @@
 #include "Background.h"
 #include "Game.h"
 #include "Random.h"
+#include "Benchmark.h"
 
 using namespace sfSnake;
+
+extern Benchmark global_benchmark;
 
 GameScreen::GameScreen() : snake_(), AIsnakes_(), AIsnakeAlive_(true) {
     snake_.initNodes();
@@ -58,29 +61,45 @@ void GameScreen::handleInput(sf::RenderWindow& window) {
     } else {
         key_E_state_last = false;
     }
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::B)) {
+        global_benchmark = Benchmark();
+    }
     snake_.handleInput();
 }
 
 void GameScreen::update(sf::Time delta) {
+    global_benchmark.in_section("GameScreen::update");
+
+    global_benchmark.in_section("GameScreen::update::generateFruit");
     if (fruit_.size() < 8) {
         int x = Random::randomInt(0, 10);
         if (x < 1) {
             generateFruit();
         }
     }
+    global_benchmark.out_section();
 
+    global_benchmark.in_section("GameScreen::update::snake_.update");
     snake_.update(delta);
+    global_benchmark.out_section();
+
+    global_benchmark.in_section("GameScreen::update::snake_.checkFruitCollisions");
     snake_.checkFruitCollisions(fruit_);
+    global_benchmark.out_section();
 
     if (snake_.hit()) {
         Game::ScreenPtr = std::make_shared<GameOverScreen>(snake_.getSize());
         return;
     }
 
+    global_benchmark.in_section("GameScreen::update::AIsnake_.update");
     if (AIsnakeAlive_) {
+        global_benchmark.in_section("GameScreen::update::AIsnake_.doAIMovement");
         if (fruit_.size()) {
             AIsnakes_[0].doAIMovement(fruit_[0].getPosition());
         }
+        global_benchmark.out_section();
+        global_benchmark.in_section("GameScreen::update::AIsnake_.other");
         AIsnakes_[0].update(delta);
         AIsnakes_[0].checkFruitCollisions(fruit_);
         snake_.checkOtherSnakeCollisions(AIsnakes_[0]);
@@ -98,11 +117,16 @@ void GameScreen::update(sf::Time delta) {
                 powerMusic_.play();
             }
         }
+        global_benchmark.out_section();
     }
+    global_benchmark.out_section();
+
     if ((powerMusic_.getStatus() != sf::Music::Playing)) {
         if (bgMusic_.getStatus() != sf::Music::Playing)
             bgMusic_.play();
     }
+
+    global_benchmark.in_section("GameScreen::update::generate_new_AIsnake");
     if (!AIsnakeAlive_) {
         AIsnakes_.erase(AIsnakes_.begin());
         AIsnakes_.push_back(Snake(false));
@@ -116,17 +140,32 @@ void GameScreen::update(sf::Time delta) {
         AIsnakes_[0].initNodes(AI_x, AI_y);
         AIsnakeAlive_ = true;
     }
+    global_benchmark.out_section();
+    global_benchmark.out_section();
     background_.updateScore(snake_.score_);
 }
 
 void GameScreen::render(sf::RenderWindow& window) {
+    global_benchmark.in_section("GameScreen::render");
+    global_benchmark.in_section("GameScreen::render::background_.render");
     background_.render(window);
+    global_benchmark.out_section();
+
+    global_benchmark.in_section("GameScreen::render::snake_.render");
     snake_.render(window);
+    global_benchmark.out_section();
+    global_benchmark.in_section("GameScreen::render::AIsnake_.render");
     if (AIsnakeAlive_)
         AIsnakes_[0].render(window);
+    global_benchmark.out_section();
+    global_benchmark.in_section("GameScreen::render::fruit_.render");
 
     for (auto fruit : fruit_)
         fruit.render(window);
+    global_benchmark.out_section();
+
+    global_benchmark.out_section();
+    global_benchmark.print_result();
 }
 
 void GameScreen::generateFruit() {
