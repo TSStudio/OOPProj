@@ -74,7 +74,7 @@ void Snake::handleInput() {
 
 void Snake::update(sf::Time delta) {
     score_ -= 0.002;
-    if (accelerating_) {
+    if (accelerating_ && score_ > 2) {
         score_ -= 0.002;
     }
     sync_length();
@@ -183,7 +183,7 @@ void Snake::move() {
     float head_y = nodePositions_[0].position.y + direction_.get_dy() * SnakeNode::Width * velocity;
     double head_degree = direction_.degree;
     nodePositions_.push_front(NodePosition{sf::Vector2f(head_x, head_y), head_degree});
-    if (accelerating_) {
+    if (accelerating_ && score_ > 2) {
         float head_x = nodePositions_[0].position.x + direction_.get_dx() * SnakeNode::Width * velocity;
         float head_y = nodePositions_[0].position.y + direction_.get_dy() * SnakeNode::Width * velocity;
         double head_degree = direction_.degree;
