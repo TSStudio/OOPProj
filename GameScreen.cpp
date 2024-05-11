@@ -22,6 +22,11 @@ GameScreen::GameScreen() : snake_(), AIsnakes_(), AIsnakeAlive_(true) {
     }
     AIsnakes_[0].initNodes(AI_x, AI_y);
 
+    bgMusic_.openFromFile("Music/bg_music.wav");
+    bgMusic_.setLoop(true);
+    bgMusic_.play();
+    powerMusic_.openFromFile("Music/power_music.wav");
+
     background_ = Background();
 }
 
@@ -79,15 +84,24 @@ void GameScreen::update(sf::Time delta) {
         AIsnakes_[0].update(delta);
         AIsnakes_[0].checkFruitCollisions(fruit_);
         snake_.checkOtherSnakeCollisions(AIsnakes_[0]);
+
         AIsnakes_[0].checkOtherSnakeCollisions(snake_);
         if (AIsnakes_[0].hit()) {
             AIsnakeAlive_ = false;
-            //todo: drop fruit
             for (auto& node : AIsnakes_[0].nodes_) {
                 if (Random::randomInt(0, 1)) continue;
                 fruit_.push_back(Fruit(node.getPosition(), 1));
             }
+            if (powerMusic_.getStatus() != sf::Music::Playing) {
+                bgMusic_.pause();
+                powerMusic_.setPlayingOffset(sf::seconds(0));
+                powerMusic_.play();
+            }
         }
+    }
+    if ((powerMusic_.getStatus() != sf::Music::Playing)) {
+        if (bgMusic_.getStatus() != sf::Music::Playing)
+            bgMusic_.play();
     }
     if (!AIsnakeAlive_) {
         AIsnakes_.erase(AIsnakes_.begin());

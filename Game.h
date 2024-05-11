@@ -28,7 +28,6 @@ public:
     static const sf::Time TimePerFrame;
 
 private:
-    sf::Music bgMusic_;
 };
 }  // namespace sfSnake
 

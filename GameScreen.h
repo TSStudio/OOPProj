@@ -25,6 +25,8 @@ private:
     bool AIsnakeAlive_;
     std::vector<Fruit> fruit_;
     Background background_;
+    sf::Music bgMusic_;
+    sf::Music powerMusic_;
 };
 }  // namespace sfSnake
 
