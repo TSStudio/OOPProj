@@ -160,7 +160,7 @@ void GameScreen::render(sf::RenderWindow& window) {
     global_benchmark.out_section();
     global_benchmark.in_section("GameScreen::render::fruit_.render");
 
-    for (auto fruit : fruit_)
+    for (auto& fruit : fruit_)
         fruit.render(window);
     global_benchmark.out_section();
 
