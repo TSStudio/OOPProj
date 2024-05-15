@@ -21,8 +21,6 @@ find_package(SFML COMPONENTS system window graphics)
 set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-
-
 aux_source_directory(. SRC_LIST)
 add_executable(sfSnake ${SRC_LIST})
 target_link_libraries(sfSnake PRIVATE sfml-graphics sfml-audio ${FREETYPE_LIBRARIES})
