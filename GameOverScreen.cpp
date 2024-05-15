@@ -7,14 +7,32 @@
 #include "GameScreen.h"
 #include "MenuScreen.h"
 #include "GameOverScreen.h"
+#include "GameFile.h"
 
 using namespace sfSnake;
 
 GameOverScreen::GameOverScreen(std::size_t score) : score_(score) {
+    GameFile gf = GameFile();
     font_.loadFromFile("Fonts/arial.ttf");
+
+    texthsc_.setFont(font_);
+    if (gf.data_.highestScore < score) {
+        gf.data_.highestScore = score;
+        gf.storeData(gf.data_);
+        texthsc_.setString("New high score!");
+    } else {
+        texthsc_.setString("Highest score: " + std::to_string(gf.data_.highestScore) + "!");
+    }
+    texthsc_.setFillColor(sf::Color::Red);
+
     textsc_.setFont(font_);
     textsc_.setString("Your score: " + std::to_string(score) + "!");
     textsc_.setFillColor(sf::Color::Red);
+
+    sf::FloatRect textHScBounds = texthsc_.getLocalBounds();
+    texthsc_.setOrigin(textHScBounds.left + textHScBounds.width / 2,
+                       textHScBounds.top + textHScBounds.height / 2);
+    texthsc_.setPosition(Game::Width / 2, Game::Height / 2 - lineHeight);
 
     sf::FloatRect textScBounds = textsc_.getLocalBounds();
     textsc_.setOrigin(textScBounds.left + textScBounds.width / 2,
@@ -106,6 +124,7 @@ void GameOverScreen::update(sf::Time delta) {
 }
 
 void GameOverScreen::render(sf::RenderWindow& window) {
+    window.draw(texthsc_);
     window.draw(textsc_);
     window.draw(selection_);
     window.draw(text_);

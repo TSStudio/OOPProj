@@ -21,6 +21,7 @@ private:
 
     unsigned int selectedItemIndex_;
     sf::Font font_;
+    sf::Text texthsc_;
     sf::Text textsc_;
     sf::Text text_;
     sf::Text text2_;
