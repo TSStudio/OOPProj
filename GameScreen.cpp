@@ -96,7 +96,15 @@ void GameScreen::update(sf::Time delta) {
     if (AIsnakeAlive_) {
         global_benchmark.in_section("GameScreen::update::AIsnake_.doAIMovement");
         if (fruit_.size()) {
-            AIsnakes_[0].doAIMovement(fruit_[0].getPosition());
+            std::vector<Fruit> fruit = fruit_;
+            // sort fruit by distance and nutrition
+            // nutrition*100 - distance
+            std::sort(fruit.begin(), fruit.end(), [&](const Fruit& a, const Fruit& b) {
+                float distance_a = abs(AIsnakes_[0].nodes_[0].getPosition().x - a.getPosition().x) + abs(AIsnakes_[0].nodes_[0].getPosition().y - a.getPosition().y);
+                float distance_b = abs(AIsnakes_[0].nodes_[0].getPosition().x - b.getPosition().x) + abs(AIsnakes_[0].nodes_[0].getPosition().y - b.getPosition().y);
+                return a.nutrition * 100 - distance_a > b.nutrition * 100 - distance_b;
+            });
+            AIsnakes_[0].doAIMovement(fruit[0].getPosition());
         }
         global_benchmark.out_section();
         global_benchmark.in_section("GameScreen::update::AIsnake_.other");
