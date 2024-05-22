@@ -2,6 +2,11 @@
 #define BENCHMARK_H
 #include <stack>
 #include <string>
+#include <chrono>
+typedef std::chrono::high_resolution_clock Clock;
+typedef std::chrono::_V2::system_clock::time_point time_point;
+typedef std::chrono::milliseconds ms;
+typedef std::chrono::duration<float> fsec;
 
 namespace sfSnake {
 class Benchmark {
@@ -12,8 +17,8 @@ public:
     void print_result();
 
 private:
-    unsigned long long tick_;
-    std::stack<std::pair<std::string, float>> sections_stack_;
+    time_point tick_;
+    std::stack<std::pair<std::string, time_point>> sections_stack_;
     std::string result;
     bool is_done = false;
 };

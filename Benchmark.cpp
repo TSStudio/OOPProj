@@ -1,5 +1,4 @@
 #include "Benchmark.h"
-#include <ctime>
 
 using namespace sfSnake;
 
@@ -7,7 +6,7 @@ Benchmark global_benchmark = Benchmark(true);
 
 Benchmark::Benchmark(bool done) {
     is_done = done;
-    tick_ = clock();
+    tick_ = Clock::now();
 }
 
 void Benchmark::in_section(std::string sectionName) {
@@ -18,7 +17,7 @@ void Benchmark::in_section(std::string sectionName) {
         result += "  ";
     }
     result += sectionName + ":\n";
-    sections_stack_.push(std::make_pair(sectionName, clock() * 1000.0 / CLOCKS_PER_SEC));
+    sections_stack_.push(std::make_pair(sectionName, Clock::now()));
 }
 
 void Benchmark::out_section() {
@@ -33,7 +32,8 @@ void Benchmark::out_section() {
     for (int i = 0; i < sections_stack_.size(); i++) {
         result += "  ";
     }
-    result += section.first + ": " + std::to_string(clock() * 1000.0 / CLOCKS_PER_SEC - section.second) + "ms\n";
+    fsec fs = Clock::now() - section.second;
+    result += std::format("{}: {:.3f}ms\n", section.first, fs.count() * 1000);
 }
 
 void Benchmark::print_result() {
@@ -41,6 +41,7 @@ void Benchmark::print_result() {
         return;
     }
     is_done = true;
-    result += "Total: " + std::to_string((clock() - tick_) * 1000.0 / CLOCKS_PER_SEC) + "ms\n";
+    fsec fs = Clock::now() - tick_;
+    result += std::format("Total: {:.3f}ms\n", fs.count() * 1000);
     printf("%s", result.c_str());
 }
