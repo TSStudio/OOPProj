@@ -83,6 +83,11 @@ void GameScreen::update(sf::Time delta) {
     snake_.update(delta);
     global_benchmark.out_section();
 
+    global_benchmark.in_section("GameScreen::update::fruit_.move");
+    for (auto& fruit : fruit_)
+        fruit.move();
+    global_benchmark.out_section();
+
     global_benchmark.in_section("GameScreen::update::snake_.checkFruitCollisions");
     snake_.checkFruitCollisions(fruit_);
     global_benchmark.out_section();
@@ -177,10 +182,5 @@ void GameScreen::render(sf::RenderWindow& window) {
 }
 
 void GameScreen::generateFruit() {
-    static std::default_random_engine engine;
-    engine.seed(time(NULL));
-    static std::uniform_int_distribution<int> xDistribution(0, Game::Width - SnakeNode::Width);
-    static std::uniform_int_distribution<int> yDistribution(0, Game::Height - SnakeNode::Height);
-
-    fruit_.push_back(Fruit(Random::randomPosition(0, Game::Width - SnakeNode::Width, 0, Game::Height - SnakeNode::Height), Random::randomInt(0, 3)));
+    fruit_.push_back(Fruit(Random::randomPosition(0, Game::Width - SnakeNode::Width, 0, Game::Height - SnakeNode::Height), Random::randomInt(0, 3), sf::Vector2f(Random::randomFloat(-10.f, 10.f), Random::randomFloat(-10.f, 10.f))));
 }
