@@ -33,13 +33,13 @@ sudo apt-get install build-essential gcc-13 g++-13 cmake
 ```
 您需要使用以下命令将 gcc/g++13 设为最高优先级的 gcc/g++
 ```
-update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-13 100
-update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-13 100
+sudo update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-13 100
+sudo update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-13 100
 ```
 或者使用以下命令手动选择
 ```
-update-alternatives --config g++
-update-alternatives --config gcc
+sudo update-alternatives --config g++
+sudo update-alternatives --config gcc
 ```
 在有编译套件后，请确保有本程序所需要的库，执行以下命令
 ```
